@@ -1,0 +1,48 @@
+{
+  "presets": [
+    // "stage-1"
+    "@babel/preset-env"
+  ],
+  "plugins": [
+    "transform-vue-jsx",
+    "syntax-dynamic-import"
+  ],
+  "env": {
+    "browser": {
+      "presets": [
+        [
+          "env", {
+            "targets": {
+              "browsers": ["last 2 versions", "safari >= 7"]
+            }
+          }
+        ]
+      ]
+    },
+    "node": {
+      "presets": [
+        [
+          "env", {
+            "targets": {
+              "node": "current"
+            }
+          }
+        ]
+      ]
+    }
+  }
+}
+
+
+// module.exports = function() {
+//   return {
+//     plugins: [
+//       require("@babel/plugin-syntax-dynamic-import"),
+//       [require("@babel/plugin-proposal-decorators"), { "legacy": true }],
+//       [require("@babel/plugin-proposal-class-properties"), { "loose": false }],
+//     ],
+//     presets: [
+//       // ...
+//     ],
+//   };
+// };

@@ -1,0 +1,28 @@
+{
+
+  // "extends": "plugin:vue/strongly-recommended",
+  "extends": ["standard","plugin:vue/base"],
+  "plugins": [
+    "html"
+   ],
+  // "parser": "babel-eslint",
+  "parserOptions": {
+    "parser": "babel-eslint",
+    "ecmaVersion": 7,
+    "sourceType": "module"
+  },
+  "rules":{
+    "new-cap":"off",
+    "indent":"off",
+    "multiline-ternary": "off",
+    "space-before-function-paren":"off",
+    "func-call-spacing":"off",
+    "space-in-parens":"off",
+    "padded-blocks":"off",
+    "no-undef":"off",
+    "quote-props":"off",
+    "eol-last":"off"
+
+  }
+}
+
