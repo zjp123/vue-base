@@ -1,3 +1,20 @@
+
+import { fetchItem } from '../api'
+
+export default {
+  FETCH_ITEMS: ({ commit, state }) => {
+    // on the client, the store itself serves as a cache.
+    // only fetch items that we do not already have, or has expired (3 minutes)
+    // if (ids.length) {
+    //   return fetchItem().then(items => commit('SET_ITEMS', { items }))
+    // } else {
+    //   return Promise.resolve()
+    // }
+    return fetchItem().then(items => commit('SET_ITEMS', { items }))
+
+  }
+}
+
 // import {
 //   // fetchUser,
 //   // fetchItems,

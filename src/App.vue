@@ -12,6 +12,11 @@
         </a>
       </nav>
     </header>
+    <div>
+      <ul>
+        <li v-for="item in items" :key="item.name">{{item.name}}</li>
+      </ul>
+    </div>
     <transition name="fade" mode="out-in">
       <router-view class="view"></router-view>
     </transition>
@@ -21,6 +26,19 @@
   // import Category from './config/category';
   export default {
       name: 'app',
+      asyncData ({ store, route }) {
+        // 触发 action 后，会返回 Promise
+        return store.dispatch('FETCH_ITEMS')
+      },
+      created() {
+        this.$store.dispatch('FETCH_ITEMS')
+      },
+      computed: {
+        // 从 store 的 state 对象中的获取 item。
+        items () {
+          return this.$store.state.items
+        }
+      },
       data() {
           return {
               categories: [

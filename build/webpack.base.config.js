@@ -1,26 +1,26 @@
 const path = require('path')
-const webpack = require('webpack')
+// const webpack = require('webpack')
 const cssTIQU = require('mini-css-extract-plugin')
 // const VueLoaderPlugin = require('vue-server-renderer/client-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
-const htmlPlugin = require('html-webpack-plugin')
+// const htmlPlugin = require('html-webpack-plugin')
 
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
 const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
-  entry: {
-    app: './src/main.js'
-  },
+  // entry: {
+  //   app: path.join(__dirname, '../src/entry-client.js')
+  // },
   devtool: isProd
     ? false
     : 'cheap-module-source-map',
   output: {
     path: path.resolve(__dirname, '../dist'),
-    publicPath: '/dist',
-    filename: '[name].[chunkhash].js'
+    publicPath: '/dist/',
+    filename: '[name].[chunkhash:5].js'
   },
   resolve: {
     extensions: ['.js', '.json', '.jsx', '.css', '.less', '.vue']
@@ -31,24 +31,6 @@ module.exports = {
     // alias: {
     //   'public': path.resolve(__dirname, '../public')
     // }
-  },
-  devServer: {
-    port: 8000,
-    host: '0.0.0.0', // 同一个局域网的ip都可以访问
-    overlay: {
-        errors: true // 错误显示到网页上
-    },
-    headers: { 'Access-Control-Allow-Origin': '*' },
-    // publicPath: '/public/',
-    historyApiFallback: {
-        index: '/dist/index.html' // 这个配置太重要了 如果不加上它，如果设置了output.public，启动服务后无法访问
-    },
-    // proxy: {
-    //     '/api': 'http://127.0.0.1:3333/',
-    //     '/user': 'http://127.0.0.1:3333/'
-    // },
-    hot: true,
-    open: true
   },
   module: {
     noParse: /es6-promise\.js$/, // avoid webpack shimming process
@@ -147,31 +129,36 @@ module.exports = {
   // performance: {
   //   hints: false
   // },
-  optimization: isProd ? {
-      runtimeChunk: {
-          name: 'runtime'
-      },
-      splitChunks: {
-          chunks: 'all'
-      }
-  } : {},
+  // optimization: isProd ? {
+  //     runtimeChunk: {
+  //         name: 'runtime'
+  //     },
+  //     splitChunks: {
+  //         chunks: 'all'
+  //     }
+  // } : {},
   plugins: isProd
     ? [
+        // new webpack.optimize.CommonsChunkPlugin({
+        //   name: 'manifest',
+        //   minChunks: Infinity
+        // }),
         new VueLoaderPlugin(),
         // new webpack.DefinePlugin({
         //   'process.env': isDev ? '"development"' : '"production"'
         // }),
-        new webpack.DefinePlugin({
-          'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-          'process.env.VUE_ENV': '"client"'
-        }),
+        // new webpack.DefinePlugin({
+        //   'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+        //   'process.env.VUE_ENV': '"client"'
+        // }),
         new cssTIQU({
             filename: 'css/[name].[contentHash:5].css',
             chunkFilename: '[name].[contentHash:5].css'
-        }),
-        new htmlPlugin({
-            template: path.join(__dirname, '../src/index.html')
         })
+        // new htmlPlugin({
+        //     template: path.join(__dirname, '../src/index.html'),
+        //     title: 'ssr-first'
+        // })
         // new webpack.optimize.UglifyJsPlugin({
         //   compress: { warnings: false }
         // }),
@@ -181,17 +168,22 @@ module.exports = {
         // })
       ]
     : [
+        // new webpack.optimize.CommonsChunkPlugin({
+        //   name: 'manifest',
+        //   minChunks: Infinity
+        // }),
         new VueLoaderPlugin(),
         // new webpack.DefinePlugin({
         //   'process.env': isDev ? '"development"' : '"production"'
         // }),
-        new webpack.DefinePlugin({
-          'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-          'process.env.VUE_ENV': '"client"'
-        }),
-        new FriendlyErrorsPlugin(),
-        new htmlPlugin({
-          template: path.join(__dirname, '../src/index.html')
-        })
+        // new webpack.DefinePlugin({
+        //   'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+        //   'process.env.VUE_ENV': '"client"'
+        // }),
+        new FriendlyErrorsPlugin()
+        // new htmlPlugin({
+        //   template: path.join(__dirname, '../src/index.html'),
+        //   title: 'ssr-first'
+        // })
       ]
 }
