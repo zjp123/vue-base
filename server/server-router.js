@@ -56,7 +56,7 @@ pageRouter.get('(.*)', async(ctx, next) => {
   console.log(111, ctx.req.url)
   // ctx.body = 999
   // const context = { url: req.url }
-  const context = { url: ctx.req.url, title: 'hello' }
+  const context = { url: ctx.req.url, title: 'hello', ctx }
   // 这里无需传入一个应用程序，因为在执行 bundle 时已经自动创建过。
   // 现在我们的服务器与应用程序已经解耦！
   // renderer.renderToString(context, (err, html) => {
@@ -82,10 +82,12 @@ pageRouter.get('(.*)', async(ctx, next) => {
   //   }
 
   // })
+
   const appStr = await renderer.renderToString(context)
-  // if (context.router.currentRoute.fullPath !== ctx.path) {
-  //   return ctx.redirect(context.router.currentRoute.fullPath)
-  // }
+  console.log(context.router.currentRoute.fullPath, 'oooooooooooo')
+  if (context.router.currentRoute.fullPath !== ctx.path) {
+    return ctx.redirect(context.router.currentRoute.fullPath)
+  }
   ctx.body = appStr
 })
 

@@ -9,12 +9,15 @@ export default context => {
     const { app, router, store } = createApp()
     // console.log(app, 'apppppp')
 
-    const { url } = context
+    // eslint-disable-next-line no-unused-vars
+    const { url, ctx } = context
     const { fullPath } = router.resolve(url).route
-
-    if (fullPath !== url) {
-      return reject(new Error(url))
-    }
+    // 这个ctx是在server render时 传过来的
+    console.log(url, fullPath, 'lallalal')
+    // if (fullPath !== url) {
+    //   return reject(new Error(url)) // 这个地方不能报错 处理
+    //   // return ctx.redirect(fullPath)
+    // }
     // 设置服务器端 router 的位置
     router.push(url)
 
@@ -41,6 +44,7 @@ export default context => {
         // 并且 `template` 选项用于 renderer 时，
         // 状态将自动序列化为 `window.__INITIAL_STATE__`，并注入 HTML。
         context.state = store.state
+        context.router = router // 这一步非常重要 这是把浏览器端的router对象 赋值给 在服务端渲染时的上下文中，用来处理前端redirect的路由，路由不一致问题
 
         resolve(app)
       }).catch(reject)

@@ -1,4 +1,6 @@
 const koaApp = require('koa')
+const send = require('koa-send')
+const path = require('path')
 // const Vue = require('vue')
 const app = new koaApp()
 const pageRouter = require('./server-router')
@@ -15,6 +17,15 @@ app.use(async(ctx, next) => {
       await next()
   }
 
+})
+
+app.use(async(ctx, next) => {
+  if (ctx.path === '/favicon.ico') {
+    console.log('favicon.icofavicon.ico')
+      await send(ctx, '/favicon.ico', { root: path.join(__dirname, '../public') })
+  } else {
+      await next()
+  }
 })
 
 // pageRouter.get('(.*)', async(ctx, next) => {
