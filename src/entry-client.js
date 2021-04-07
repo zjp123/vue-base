@@ -23,10 +23,11 @@ router.onReady(() => {
     const activated = matched.filter((c, i) => {
       return diffed || (diffed = (prevMatched[i] !== c))
     })
-
+    // 如果还是当前页面组件
     if (!activated.length) {
       return next()
     }
+    // 如果是跳到其他页面
 
     // 这里如果有加载指示器 (loading indicator)，就触发
     console.log('数据加载中....')

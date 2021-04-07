@@ -8,7 +8,7 @@
     "lint": "eslint --ext .js --ext .jsx --ext .vue src/",
     "lint:fix": "eslint --fix --ext .js --ext .jsx --ext .vue src/ build/",
     "precommit": "npm run lint:fix",
-    "dev": "rimraf dist && npm run dev:client && npm run dev:server && npm run dev:start",
+    "dev": "rimraf dist && npm run dev:client && npm run dev:server",
     "dev:start": "cross-env NODE_ENV=development nodemon ./src/test-bundle-koa-ssr.js",
     "dev:client": "cross-env NODE_ENV=development webpack-dev-server --progress --config  build/webpack.client.config.js",
     "dev:server-back": "cross-env NODE_ENV=development webpack-dev-server --progress --config  build/webpack.server.config.js",

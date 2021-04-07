@@ -6,7 +6,7 @@ const resolvePath = file => path.resolve(__dirname, file)
 const send = require('koa-send')
 
 const { createBundleRenderer } = require('vue-server-renderer')
-const fileName = path.join(__dirname, './index.html')
+const fileName = path.join(__dirname, './index.html') // 这个可以用src文件夹里面的那个html文件
 // const fileName = path.join(__dirname, '../dist/index.html')
 const template = fs.readFileSync(fileName, 'utf-8')
 // const serverBundle = require('fs').readFileSync(path.join(__dirname, '../dist/vue-ssr-server-bundle.json'), 'utf-8')
