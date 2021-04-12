@@ -112,6 +112,10 @@ pageRouter.get('(.*)', async(ctx, next) => {
   const clientData = clientMiniFaset.data
   // console.log(clientData, 'clientData.clientData.clientData')
 
+  // 读取不到文件 只能是内存
+  // const testMemory = mfs.readFileSync(path.join(__dirname, '../public/favicon.ico'), 'utf-8')
+  // console.log(testMemory, 'testMemorytestMemory')
+
   // const imageE = await axios.get(// 获取客户端入口打包在内存的文件
   //   'http://0.0.0.0:8000/dist/images/logo-48.450e6.png'
   // )
