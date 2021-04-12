@@ -29,7 +29,7 @@ app.use(async(ctx, next) => {
 })
 
 app.use(async(ctx, next) => {
-  console.log(ctx.path, 'ctx.pathctx.path')
+  // console.log(ctx.path, 'ctx.pathctx.path')
   if (ctx.path === '/favicon.ico') {
     console.log('favicon.icofavicon.ico')
       await send(ctx, '/favicon.ico', { root: path.join(__dirname, '../public') })

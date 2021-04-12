@@ -21,6 +21,9 @@ export default context => {
     //   // return ctx.redirect(fullPath)
     // }
     // 设置服务器端 router 的位置
+    if (url.includes('images')) { // 如果是静态图片的话 就不是组件匹配，直接返回，防止控制台报错
+      return
+    }
     router.push(url)
 
     // 等到 router 将可能的异步组件和钩子函数解析完

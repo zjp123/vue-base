@@ -99,7 +99,7 @@ pageRouter.get('/dist/(.*)', async(ctx, next) => {
 
 pageRouter.get('(.*)', async(ctx, next) => {
   // await serverRender(ctx, renderer, template)
-  console.log(111, ctx.req.url)
+  // console.log(111, ctx.req.url)
   // ctx.body = 999
   // const context = { url: req.url }
   const context = { url: ctx.req.url, title: 'hello', ctx }
