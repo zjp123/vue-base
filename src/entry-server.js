@@ -28,7 +28,7 @@ export default context => {
       const matchedComponents = router.getMatchedComponents()
       // 匹配不到的路由，执行 reject 函数，并返回 404
       if (!matchedComponents.length) {
-        return reject(new Error({ code: 404 }))
+        return reject(new Error('no component matched'))
       }
       // 对所有匹配的路由组件调用 `asyncData()`
       // eslint-disable-next-line array-callback-return

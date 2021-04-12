@@ -26,7 +26,7 @@ if (!isProd) { // 开发环境
           errors: true // 错误显示到网页上
       },
       headers: { 'Access-Control-Allow-Origin': '*' },
-      // publicPath: '/public/',
+      // publicPath: '/dist/',
       historyApiFallback: {
           index: '/dist/index.html' // 这个配置太重要了 如果不加上它，如果设置了output.public，启动服务后无法访问
       },

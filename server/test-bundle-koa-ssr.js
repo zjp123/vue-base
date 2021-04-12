@@ -1,9 +1,18 @@
 const koaApp = require('koa')
 const send = require('koa-send')
 const path = require('path')
-// const Vue = require('vue')
+// const staticRouter = require('./static')
+
 const app = new koaApp()
-const pageRouter = require('./server-router')
+
+const isProd = process.env.NODE_ENV === 'production'
+
+let pageRouter
+if (isProd) {
+  pageRouter = require('./server-router')
+} else {
+  pageRouter = require('./server-router-dev')
+}
 app.use(async(ctx, next) => {
   ctx.set('Access-Control-Allow-Origin', '*')
   ctx.set('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With, yourHeaderFeild')
@@ -20,6 +29,7 @@ app.use(async(ctx, next) => {
 })
 
 app.use(async(ctx, next) => {
+  console.log(ctx.path, 'ctx.pathctx.path')
   if (ctx.path === '/favicon.ico') {
     console.log('favicon.icofavicon.ico')
       await send(ctx, '/favicon.ico', { root: path.join(__dirname, '../public') })
@@ -65,6 +75,7 @@ app.use(async(ctx, next) => {
 //   })
 //   await next()
 // })
+// app.use(staticRouter.routes()).use(staticRouter.allowedMethods())
 app.use(pageRouter.routes()).use(pageRouter.allowedMethods())
 
 app.listen(8090, () => {

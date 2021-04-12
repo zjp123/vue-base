@@ -11,6 +11,7 @@ const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
+  mode: isProd ? 'production' : 'development',
   // entry: {
   //   app: path.join(__dirname, '../src/entry-client.js')
   // },
@@ -19,7 +20,9 @@ module.exports = {
     : 'cheap-module-source-map',
   output: {
     path: path.resolve(__dirname, '../dist'),
-    publicPath: '/dist/',
+    // publicPath: '/dist/',
+    publicPath: isProd ? '/dist/' : 'http://0.0.0.0:8000/dist/',
+    // publicPath: '/public/',
     filename: '[name].[chunkhash:5].js'
   },
   resolve: {
@@ -57,6 +60,7 @@ module.exports = {
       },
       {
         test: /\.js$/,
+        include: /src/,
         loader: 'babel-loader',
         exclude: /node_modules/
       },

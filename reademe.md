@@ -42,3 +42,16 @@ app.use(async(ctx, next) => {
   # context.state：（对象）初始 Vuex store 状态，将以 window.__INITIAL_STATE__ 的形式内联到页面。
 
 
+# webpack-cli 版本过高有问题
+
+# memory-fs 只能读取该域名下的文件 跨端口 跨协议都不行, 并且只能是内存当中的 硬盘中的也不行
+
+# koa-send root 参数什么意思
+# 生产环境时 inject: false。这样设置时可以的，因为打包出来的文件是实体文件，所以自动混入时是可以的，开发环境时，如果设为false 那么因为本事是内存里的，比较虚拟，所以开发环境时 要么设为inject: true,要么手动注入！！
+```
+这是服务端打包后的文件资源，可以发现这里面没有静态资源--没有图片资源，也就是说，服务端打包不打包静态资源文件！！所以在配置开发环境的时候，客户端的开发环境配置中，output.publicPath字段，一定要配置成，客户端webpack-dev-server启动时的域名地址：
+publicPath: isProd ? '/dist/' : 'http://0.0.0.0:8000/dist/',
+后面/dist/ 这个路径一定要和服务端 webapck中output.publicPath字段一致，名字必须一样，这里都是/dist/，要不然它们在混合的时候，文件匹配不上！！
+
+总结： 服务端渲染时  开发环境和生产环境的output.publicPath配置是不一样的，生产环境时可以配置一样的如：output.publicPath：'/dist/'，前提是：客户端打包的文件和服务端打包的文件 都在同一个域名，主机，地址下，在同一台机器，同一个目录里面，这样打包后的文件在混入的时候，才能找到正确的文件路径。
+```
