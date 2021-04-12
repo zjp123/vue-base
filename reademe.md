@@ -55,3 +55,4 @@ publicPath: isProd ? '/dist/' : 'http://0.0.0.0:8000/dist/',
 
 总结： 服务端渲染时  开发环境和生产环境的output.publicPath配置是不一样的，生产环境时可以配置一样的如：output.publicPath：'/dist/'，前提是：客户端打包的文件和服务端打包的文件 都在同一个域名，主机，地址下，在同一台机器，同一个目录里面，这样打包后的文件在混入的时候，才能找到正确的文件路径。
 ```
+# 注意 client-entry 与 server-entry output.publicPath之间配置不同的影响 可能跑不通，资源无法响应

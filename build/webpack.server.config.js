@@ -17,8 +17,8 @@ module.exports = merge(base, {
   // entry: path.join(__dirname, '../src/entry-server.js'),
   output: {
     filename: 'server-bundle-entry.js',
-    publicPath: '/dist/', // http://0.0.0.0:8000/dist/
-    // publicPath: 'http://0.0.0.0:8000/dist/',
+    // publicPath: '/dist/', // http://0.0.0.0:8000/dist/
+    publicPath: isProd ? '/dist/' : 'http://0.0.0.0:8000/dist/',
     libraryTarget: 'commonjs2'
     // path: path.join(__dirname, '../server-build')
   },
