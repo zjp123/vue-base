@@ -4,11 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
+    <title>{{{ title }}}</title>
+    {{{ renderStyles() }}}
 </head>
 
 <body>
     <id id="app"><!--vue-ssr-outlet--></div>
+    {{{ renderState() }}}
+    {{{ renderState({ contextKey: 'myCustomState', windowKey: '__MY_STATE__' }) }}}
+    {{{ renderScripts() }}}
 </body>
 
 </html>

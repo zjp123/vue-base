@@ -49,6 +49,7 @@ export default context => {
         // 并且 `template` 选项用于 renderer 时，
         // 状态将自动序列化为 `window.__INITIAL_STATE__`，并注入 HTML。
         context.state = store.state
+        context.myCustomState = store.state // 这是配合contex.renderState({自定义})玩的
         // 当使用 template 时，context.state 将作为 window.__INITIAL_STATE__ 状态，自动嵌入到最终的 HTML 中。
         context.router = router // 这一步非常重要 这是把浏览器端的router对象 赋值给 在服务端渲染时的上下文中，用来处理前端redirect的路由，路由不一致问题
 

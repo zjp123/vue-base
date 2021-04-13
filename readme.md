@@ -54,5 +54,30 @@ publicPath: isProd ? '/dist/' : 'http://0.0.0.0:8000/dist/',
 后面/dist/ 这个路径一定要和服务端 webapck中output.publicPath字段一致，名字必须一样，这里都是/dist/，要不然它们在混合的时候，文件匹配不上！！
 
 总结： 服务端渲染时  开发环境和生产环境的output.publicPath配置是不一样的，生产环境时可以配置一样的如：output.publicPath：'/dist/'，前提是：客户端打包的文件和服务端打包的文件 都在同一个域名，主机，地址下，在同一台机器，同一个目录里面，这样打包后的文件在混入的时候，才能找到正确的文件路径。
+严格说，服务端打包是不打包静态文件，但是，它会把项目中所要用的静态文件路径，处理成虚拟文件路径，也就是配合output.publicPath 它来做的。
 ```
-# 注意 client-entry 与 server-entry output.publicPath之间配置不同的影响 可能跑不通，资源无法响应
+# 注意 client-entry 与 server-entry output.publicPath之间配置不同的影响 可能跑不通，资源无法响应，
+
+# 因此，如果你依赖由组件生命周期钩子函数填充的上下文数据，则不建议使用流式传输模式。
+
+# css 管理 done
+# 缓存 ？
+# head 管理 done
+# context.renderState ?
+# 开发环境，如果client-entry 和 server-entry 如果都设置为output.publicPath: '/dist/' 不成功的原因是因为 它们分别是两个服务，客户端通过webpack-dev-serve 启动一个服务，服务端通过node启动一个服务，虽然打包后的publicPath地址一样，在混入的时候，是属于两个服务下面的，也就是不在同一个内存空间的，所有混入不成功，也就跑不起来。
+```
+问题：
+1、inject: false || true ,client--output.publicPath: '/dist/', serve--output.publicPath: '/dist/',如果是这样的配置，服务端渲染跑不通，inject不管为true或者false 都跑不通，
+2、inject: false， client--output.publicPath: 'http://0.0.0.0:8000/dist/', serve--output.publicPath: '/dist/'
+如果是这样的配置，inject为false，又没有手动注入的话，服务端渲染跑不通，如果手动注入{{{ renderState() }}}，context.renderStyles()，则可以跑通
+```
+```js
+这个是配合index.html文件中{{{ renderState({ contextKey: 'myCustomState', windowKey: '__MY_STATE__' }) }}}玩的，再加上entry-server.js 中 ：context.myCustomState = store.state
+context.renderState({ // 没起作用
+    contextKey: 'myCustomState',
+    windowKey: '__MY_STATE__'
+  })
+这三者结合一起玩的....
+```
+# node 服务启动时，如果控制台报错，热更新没有效果，会受缓存影响，解决：ctrl+c 关闭服务，在重新启动！
+# 开发环境，在服务端渲染跑通的前提下serve-entry 中output.publicPath配置与client-entry中的output.publicPath一样，可以避免 GET http://127.0.0.1:8090/dist/images/logo-48.450e6.png 500 (Internal Server Error) 这个错误，这是因为在服务端渲染时不会打包实体的静态文件。但是服务端渲染是成功的。

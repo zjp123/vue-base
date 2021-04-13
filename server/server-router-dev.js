@@ -102,7 +102,7 @@ pageRouter.get('(.*)', async(ctx, next) => {
   // console.log(111, ctx.req.url)
   // ctx.body = 999
   // const context = { url: req.url }
-  const context = { url: ctx.req.url, title: 'hello', ctx }
+  const context = { url: ctx.req.url, title: 'world beautiful', ctx }
   if (!bundle) {
     ctx.body = '还没弄好呢。。。'
   }
@@ -141,13 +141,20 @@ pageRouter.get('(.*)', async(ctx, next) => {
   // console.log(clientMiniFaset, '到底是啥.....')
 
   const renderer = createBundleRenderer(bundle, {
-    inject: true,
+    inject: false,
     template,
     // basedir: 'http:/0.0.0.0:8000/dist/',
     // const clientManifest = require('../dist/vue-ssr-client-manifest.json')
     clientManifest: clientData
   })
   const appStr = await renderer.renderToString(context)
+  // 这里可以用 ejs这样的渲染引擎库配合做
+  context.renderStyles()
+  context.renderState({ // 没起作用
+    contextKey: 'myCustomState',
+    windowKey: '__MY_STATE__'
+  })
+  context.renderScripts()
   console.log(context.router.currentRoute.fullPath, 'oooooooooooo')
   if (context.router.currentRoute.fullPath !== ctx.path) {
     return ctx.redirect(context.router.currentRoute.fullPath)
